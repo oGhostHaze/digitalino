@@ -1,0 +1,215 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+[x-cloak] {
+    display: none;
+}
+/* Triangle Shape */
+.border-b-20 {
+    border-bottom-width: 20px;
+}
+.border-l-10 {
+    border-left-width: 10px;
+}
+.border-r-10 {
+    border-right-width: 10px;
+}
+
+/* Star Shape (Using Clip Path) */
+.clip-star {
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%,
+                        50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+/* Star Shape */
+.star-shape {
+    background: yellow;
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%,
+                        50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    width: 80px;
+    height: 80px;
+}
+.oval-shape {
+    width: 120px;
+    height: 80px;
+    background-color: purple;
+    border-radius: 50%;
+}
+
+.triangle {
+    width: 0;
+    height: 0;
+    border-left: 40px solid transparent;
+    border-right: 40px solid transparent;
+    border-bottom: 70px solid red;
+}
+/* Triangle Shape */
+.triangle-shape {
+    width: 0;
+    height: 0;
+    border-left: 30px solid transparent;
+    border-right: 30px solid transparent;
+    border-bottom: 60px solid blue;
+}
+.border-green-500 {
+    border-color: green !important;
+}
+.drop-zone {
+    width: 80px;
+    height: 80px;
+    border: 2px dashed gray;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    background-color: white;
+    transition: background-color 0.3s ease;
+}
+
+/* Shape-specific styles */
+.drop-zone[data-shape="circle"] {
+    border-radius: 50%;
+}
+
+.drop-zone[data-shape="oval"] {
+    border-radius: 50% / 30%;
+    width: 100px;
+    height: 60px;
+}
+
+.drop-zone[data-shape="triangle"] {
+    width: 0;
+    height: 0;
+    border-left: 40px solid transparent;
+    border-right: 40px solid transparent;
+    border-bottom: 80px solid lightgray;
+    background: none;
+    border: none;
+}
+
+.drop-zone[data-shape="rectangle"] {
+    width: 120px;
+    height: 60px;
+    border-radius: 0;
+}
+
+.drop-zone[data-shape="square"] {
+    border-radius: 0;
+    width: 80px;
+    height: 80px;
+}
+
+/* Highlight for correct drop */
+.drop-zone.correct {
+    border: 2px solid green;
+    background-color: #e0ffe0;
+}
+
+.main-content {
+    position: relative;
+    z-index: 1;          /* Ensure it's above the clouds */
+}
+
+body {
+    background: skyblue;
+    margin: 0;
+    padding: 0;
+    position: relative; /* Establish stacking context */
+    z-index: 0;          /* Default layer */
+}
+
+.moving-background {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: -1;         /* Place behind all content */
+    pointer-events: none; /* Prevent interference with clicks */
+}
+
+.cloud {
+    position: absolute;
+    top: 50px;
+    left: -200px;
+    width: 200px;
+    height: 100px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 60px 20px 0 white, 120px 10px 0 white, 90px -10px 0 white;
+    animation: moveClouds 20s linear infinite;
+    opacity: 0.9;
+}
+
+@keyframes moveClouds {
+    from { left: -250px; }
+    to { left: 100%; }
+}
+
+.balloon-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;  /* Makes sure clicks go through */
+    z-index: -1;  /* Behind the content */
+    overflow: hidden;
+}
+
+.balloon {
+    position: absolute;
+    bottom: -100px;  /* Start below the screen */
+    width: 40px;
+    height: 55px;
+    background-color: red;  /* Default color, will be overridden inline */
+    border-radius: 50% 50% 45% 45%;
+    animation: floatUp linear infinite;
+    box-shadow: inset -5px -10px rgba(0,0,0,0.1);
+}
+
+/* Balloon floating animation */
+@keyframes floatUp {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(-120vh);  /* Moves the balloon off the top */
+    }
+}
+
+.bird-container {
+    position: fixed;
+    right: -100px; /* Start off-screen */
+    z-index: -1; /* Adjust as needed */
+    pointer-events: none; /* So it doesn't interfere with clicks */
+    animation: flyAcross linear infinite;
+}
+
+.bird {
+    width: 80px;
+    height: 80px;
+    background: url('http://localhost:8000/images/bird.png') no-repeat center;
+    background-size: contain;
+    transform: scaleX(-1);
+}
+
+/* Animation */
+@keyframes flyAcross {
+    from {
+        transform: translateX(0); /* Start from the left */
+    }
+    to {
+        transform: translateX(-120vw); /* Fly beyond the right edge */
+    }
+}
+
+
+/* Flapping wings animation */
+@keyframes flap {
+    from {
+        transform: scaleY(1);
+    }
+    to {
+        transform: scaleY(0.9);
+    }
+}
+
+
